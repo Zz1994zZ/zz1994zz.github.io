@@ -2,15 +2,52 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
-		<script type="text/javascript" src="js/index.js">
-		</script>
+		<title>乐园</title>
+		<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+ 		<link rel="icon" href="img/favicon.ico" type="image/x-icon">
+		<script type="text/javascript" src="js/index.js"></script>
+		<script src="build/react.js"></script>
+	    <script src="build/react-dom.js"></script>
+	    <script src="https://npmcdn.com/babel-core@5.8.38/browser.min.js"></script>
 	</head>
-	<body style="background-image:url(img/bgimage.png);">
-		<img id ="myimg" src="img/tb2.png"
-			style="position: absolute; top:477px;left: 686px;" 
-			onclick="changgeImg(1)"
+	<body>
+			<img border="0" 
+			alt="" 
+			onload="if(this.width'gt;180) {this.resized=true; this.width=180;};if(this.height'gt;180) {this.resized=true; this.height=180;}" 
+			src="http://image.uuu9.com/games/mxd//UploadFiles//20071030/071030155927890837.gif"
 			ondblclick="show()"
-			/>
+			>
+			<img border="0" 
+			alt="" 
+			onload="if(this.width'gt;180) {this.resized=true; this.width=180;};if(this.height'gt;180) {this.resized=true; this.height=180;}" 
+			src="http://image.uuu9.com/games/mxd//UploadFiles//20071029/07102917510309320795.gif"
+			ondblclick="show()"
+			>
+			<div id="example"></div>
+		    <script type="text/babel">
+		      ReactDOM.render(
+		        <h1>Hello, world!</h1>,
+		        document.getElementById('example')
+		      );
+		    </script>
+		    <!-- 来必力City版安装代码 -->
+			<div id="lv-container" data-id="city" data-uid="MTAyMC8yNzY1Ni80MjM0">
+				<script type="text/javascript">
+			   (function(d, s) {
+			       var j, e = d.getElementsByTagName(s)[0];
+			
+			       if (typeof LivereTower === 'function') { return; }
+			
+			       j = d.createElement(s);
+			       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+			       j.async = true;
+			
+			       e.parentNode.insertBefore(j, e);
+			   })(document, 'script');
+				</script>
+			<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+			</div>
+			<!-- City版安装代码已完成 -->
+		    
 	</body>
 </html>

@@ -9,8 +9,13 @@
 		<script src="build/react.js"></script>
 	    <script src="build/react-dom.js"></script>
 	    <script src="https://npmcdn.com/babel-core@5.8.38/browser.min.js"></script>
+		<script src="js/index.js"></script>
 	</head>
-	<body>
+	<body>	
+	<!--border:1px solid #c3c3c3; -->
+			<canvas id="myCanvas" height="500" width="900" style="position:absolute;z-index:-1;height:90%;width:90%">
+			Your browser does not support the canvas element.
+			</canvas>
 			<img border="0" 
 			alt="" 
 			onload="if(this.width'gt;180) {this.resized=true; this.width=180;};if(this.height'gt;180) {this.resized=true; this.height=180;}" 
@@ -33,7 +38,7 @@
 		      );
 		    </script>
 		    <!-- 来必力City版安装代码 -->
-			<div id="lv-container" data-id="city" data-uid="MTAyMC8yNzY1Ni80MjM0">
+			<!--<div id="lv-container" data-id="city" data-uid="MTAyMC8yNzY1Ni80MjM0">
 				<script type="text/javascript">
 			   (function(d, s) {
 			       var j, e = d.getElementsByTagName(s)[0];

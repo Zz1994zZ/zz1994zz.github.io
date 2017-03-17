@@ -233,10 +233,10 @@ function move(code,role){
 }
 window.onkeydown=function(event){
    var code = event.keyCode;
-   //if(code >=37 && code<= 40){
+   //if(code >=37&&code<= 40){
    //   move(code,monkey);
 	if(code ==37 || code== 39){
-      move(code,monkey);    
+      move(code,monkey); 	  
    }else if(code ==32){
 	  monkey.attack();
    }

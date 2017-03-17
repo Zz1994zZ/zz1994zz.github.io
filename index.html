@@ -5,19 +5,30 @@
 		<title>乐园</title>
 		<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
  		<link rel="icon" href="img/favicon.ico" type="image/x-icon">
+		<link type="text/css" rel="stylesheet" media="screen" href="http://oss.rainman.me/rainman.me/js/sakura/jquery-sakura.css" />
+		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 		<script src="build/react.js"></script>
 	    <script src="build/react-dom.js"></script>
 	    <script src="https://npmcdn.com/babel-core@5.8.38/browser.min.js"></script>
 		<script src="js/index.js"></script>
-		<script src="js/flush.js"></script>
+		<!--<script src="js/flush.js"></script>-->
+		<script src="http://oss.rainman.me/rainman.me/js/sakura/jquery-sakura.js"></script>
+		<script>
+			$(function() {
+				$('body').sakura();
+			});
+			$(window).load(function() {
+				$('body').sakura();
+			});
+		</script>
 	</head>
 	<body>	
-	<!--border:1px solid #c3c3c3; -->
-			<canvas id="myCanvas" height="500" width="900" style="position:absolute;z-index:-1;height:90%;width:90%">
+	<!--border:1px solid #c3c3c3; position:absolute;z-index:-1;-->
+			<div><canvas id="myCanvas" height="400" width="1552" >
 			Your browser does not support the canvas element.
-			</canvas>
-			<img id="zz" border="0" 
+			</canvas></div>
+			<!--<img id="zz" border="0" 
 			alt="" 
 			onload="if(this.width'gt;180) {this.resized=true; this.width=180;};if(this.height'gt;180) {this.resized=true; this.height=180;}" 
 			src="http://image.uuu9.com/games/mxd//UploadFiles//20071030/071030155927890837.gif"
@@ -38,33 +49,20 @@
 			src="http://7xsim2.com1.z0.glb.clouddn.com/87d04f209b90586b02b5aa548da5c31f.gif"
 			ondblclick="show()"	
 			>
-			</a>
+			</a>-->
 			
-			<div id="example"></div>
+			<div id="example" style="text-align: center">
+<p>さくら ひらひら 舞い降りて落ちて</p>
+<p>揺れる 想いのたけを 抱きしめた</p>
+<p>君と 春に 愿いし あの梦は</p>
+<h5>今も见えているよ さくら舞い散る</h5>
+			</div>
 		    <script type="text/babel">
 		      ReactDOM.render(
-		        <h1>Hello, world!</h1>,
-		        document.getElementById('example')
+		        	<h1>shmily</h1>
+　　			 ,
+		        document.getElementById('zz')
 		      );
 		    </script>
-		    <!-- 来必力City版安装代码 -->
-			<!--<div id="lv-container" data-id="city" data-uid="MTAyMC8yNzY1Ni80MjM0">
-				<script type="text/javascript">
-			   (function(d, s) {
-			       var j, e = d.getElementsByTagName(s)[0];
-			
-			       if (typeof LivereTower === 'function') { return; }
-			
-			       j = d.createElement(s);
-			       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-			       j.async = true;
-			
-			       e.parentNode.insertBefore(j, e);
-			   })(document, 'script');
-				</script>
-			<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
-			</div>
-			<!-- City版安装代码已完成 -->
-		    
 	</body>
 </html>

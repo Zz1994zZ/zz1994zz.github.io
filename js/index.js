@@ -2,10 +2,11 @@ var roleList=new Array();
 var monkey;
 var alien;
 var canvas;
+var sakura;
 function Role(){
 	var role=new Object();
 	role.x=500;
-	role.y=300;
+	role.y=320;
 	role.state=0;//0静止 1移动 2攻击
 	role.direction=3;//     0上
 //						 3左边   	1右  
@@ -18,10 +19,10 @@ function Role(){
 	role.enable=true;
 	role.angle=0;//角度
 	role.setAngle=function(x,y){
-		console.log("未定义设置角度！~");
+		//console.log("未定义设置角度！~");
 	}
 	role.refresh=function(){
-		console.log("未定义刷新！")
+		//console.log("未定义刷新！")
 		};
 	role.realMove=function(){
 		switch(role.direction){
@@ -107,7 +108,7 @@ function Monkey(){
 	}
 	monkey.setAngle=function(x,y){
 		this.angle=(y-this.y-50)/(x-this.x-50);
-		console.log("monkey设置角度"+this.angle);
+		//console.log("monkey设置角度"+this.angle);
 	}
 	
 	return monkey;
@@ -178,21 +179,25 @@ function init(){
 		//roleList.push(new Banana());
 		monkey.attack();
 	}
+	sakura=new Image();
+	sakura.src="img/sakura.png";
 	
 }
 function draw(){
 	var cxt=canvas.getContext("2d");
 	cxt.fillStyle="#ffffff";
-	cxt.fillRect(0,0,1300,780);
+	cxt.fillRect(0,0,1552,780);
+	cxt.drawImage(sakura,0,-250,1500,650);
 //	cxt.drawImage(role.img,role.x,role.y);
 	for (var i = 0; i <roleList.length; i++) {
 		var role=roleList[i];
 		if(role.enable)
 			drawRole(role,cxt);
 	}
+	
 	cxt.fillStyle="#FF0000";
-	cxt.moveTo(0,375);
-	cxt.lineTo(1300,375);
+	cxt.moveTo(0,760);
+	cxt.lineTo(1862,650);
 	cxt.fill();//填充
 	cxt.stroke();//画线
 }
@@ -228,8 +233,10 @@ function move(code,role){
 }
 window.onkeydown=function(event){
    var code = event.keyCode;
-   if(code >=37 && code<= 40){
-      move(code,monkey);
+   //if(code >=37 && code<= 40){
+   //   move(code,monkey);
+	if(code ==37 || code== 39){
+      move(code,monkey);    
    }else if(code ==32){
 	  monkey.attack();
    }

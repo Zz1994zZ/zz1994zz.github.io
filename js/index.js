@@ -2,7 +2,7 @@ var roleList=new Array();
 var monkey;
 var alien;
 var canvas;
-var sakura;
+var zzsakura;
 function Role(){
 	var role=new Object();
 	role.x=500;
@@ -179,15 +179,15 @@ function init(){
 		//roleList.push(new Banana());
 		monkey.attack();
 	}
-	sakura=new Image();
-	sakura.src="img/sakura.png";
+	zzsakura=new Image();
+	zzsakura.src="img/sakura.png";
 	
 }
 function draw(){
 	var cxt=canvas.getContext("2d");
 	cxt.fillStyle="#ffffff";
 	cxt.fillRect(0,0,1552,780);
-	cxt.drawImage(sakura,0,-250,1500,650);
+	cxt.drawImage(zzsakura,0,-250,1500,650);
 //	cxt.drawImage(role.img,role.x,role.y);
 	for (var i = 0; i <roleList.length; i++) {
 		var role=roleList[i];

@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="keywords" content="周壮,个人博客,zz,withzz" />
+		<meta name="description" content="周壮的博客" />
+		<title>乐园</title>
+		<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+ 		<link rel="icon" href="img/favicon.ico" type="image/x-icon">
+		<!--引入wangEditor.css-->
+		<link rel="stylesheet" type="text/css" href="js/dist/css/wangEditor.min.css">
+		 <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+		 <link href="http://cdn.bootcss.com/bootstrap/3.0.1/css/bootstrap-theme.min.css" rel="stylesheet">
+		 <link href="http://cdn.bootcss.com/bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet">
+		 <script src="http://cdn.bootcss.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
+		 <script src="js/blogJS/react.js"></script>
+		 <script src="js/blogJS/react-dom.js"></script>
+		 <script src="js/blogJS/browser.min.js"></script>
+		 <script>
+						 function getLocalTime(nS) {     
+						   return new Date(parseInt(nS) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');     
+						}     
+		 </script>
+		 <script type="text/babel">
+				 var Words = React.createClass({
+						render: function() {
+												return 		<div className="row clearfix">
+																<div className="col-md-8 column">
+																	<h2>
+																		 
+																	</h2>
+																	<div dangerouslySetInnerHTML={{__html: this.props.content}} />		
+																	<p>
+																		 <a className="btn" href="#">{this.props.username}»</a>{this.props.date}
+																	</p>
+																</div>
+																<div className="col-md-4 column">
+																</div>
+															</div>
+						}
+					});
+				 var WordsList = React.createClass({
+											  getInitialState: function() {
+																			return {
+																			  wordsList: []
+																			};
+																		  },
+											componentDidMount: function() {
+																			$.post(this.props.source,function(result) {
+																			  var lastGist = result;
+																			  if (this.isMounted()) {
+																				this.setState({
+																				  wordsList: lastGist
+																				});
+																			  }
+																			}.bind(this));
+																		  },
+												  render: function() {
+																		return <div>
+																				{
+																				this.state.wordsList.reverse().map(function(item){
+																						return <Words  username={item.auther.username} content={item.content} date={getLocalTime(item.date/1000)} />
+																					})
+																				}
+																				</div>
+																	 }
+												});
+				  ReactDOM.render(
+					<WordsList source="http://101.200.54.142:8080/blog/getAllWords"/>,
+					document.getElementById('example')
+				  );
+				  
+		</script>
+		</head>
+	<body>
+		<div id="calendar"></div>
+		<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<nav class="navbar navbar-default" role="navigation">
+			<a name="top"/>
+				<div class="navbar-header">
+					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> 
+					 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span>
+					 <span class="icon-bar"></span>
+					 <span class="icon-bar"></span></button> <a class="navbar-brand" href="http://withzz.cn">主页</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="active">
+							 <a href="#">图片</a>
+						</li>
+						<li>
+							 <a href="#">文本</a>
+						</li>
+						<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">菜单<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									 <a href="#">不知道</a>
+								</li>
+								<li>
+									 <a href="#">另一个不知道</a>
+								</li>
+								<li>
+									 <a href="#">有些别的事情不知道</a>
+								</li>
+								<li class="divider">
+								</li>
+								<li>
+									 <a href="#">奇怪的链接</a>
+								</li>
+								<li class="divider">
+								</li>
+								<li>
+									 <a href="#">又一个奇怪的链接</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<form class="navbar-form navbar-left" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control" />
+						</div> <button type="submit" class="btn btn-default">寻找</button>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							 <a href="paradise.xhtml">画画</a>
+						</li>
+						<li class="dropdown">
+					</ul>
+				</div>
+			</nav>
+			<div id="example"></div>
+			<div class="row clearfix" >
+				<div class="col-md-8 column">
+					<div id="div1" style="height:400px;max-height:500px;">
+						<p>请输入内容...</p>
+					</div>
+					<a name="myeditor"/>
+				</div>
+				<div class="col-md-4 column">
+				</div>
+			</div>
+		</div>
+	
+	</div>
+			<button id="btn1">发布</button>
+
+	<div id="dg" style="z-index: 9999; position: fixed ! important; right: 100px; top: 50%;">  
+		<table width="100%" style="position: absolute; width:260px; right: 0px; top: 0px;">  
+			<tr>
+				<td>
+				<a href="#top">回到顶部</button>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<a href="#myeditor">有话要说</button>
+				</td>
+			</tr>
+			
+		</table>  
+	</div>  
+	<!--这里引用jquery和wangEditor.js-->
+	
+	<script type="text/javascript" src="js/dist/js/wangEditor.min.js"></script>
+	<script type="text/javascript">
+		var editor = new wangEditor('div1');
+		editor.create();
+	</script>
+	<!--这里引用jquery和wangEditor.js-->
+	<script type="text/javascript">
+		$('#btn1').click(function () {
+			// 获取编辑器区域完整html代码
+			var html = editor.$txt.html();
+
+			// 获取编辑器纯文本内容
+			var text = editor.$txt.text();
+
+			// 获取格式化后的纯文本
+			var formatText = editor.$txt.formatText();
+			console.log(html);
+				$.post("http://101.200.54.142:8080/blog/publish",{content:html},function(result) {
+					  			console.log(result);
+					});
+		});
+	</script>
+	</body>
+</html>

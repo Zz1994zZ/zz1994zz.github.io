@@ -183,6 +183,7 @@
 			console.log(html);
 				$.post("http://101.200.54.142:8080/blog/publish",{content:html},function(result) {
 					  			console.log(result);
+								location.reload();
 					});
 		});
 	</script>

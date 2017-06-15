@@ -1,18 +1,31 @@
+Array.prototype.indexOf = function(val) {
+for (var i = 0; i < this.length; i++) {
+if (this[i] == val) return i;
+}
+return -1;
+};
+Array.prototype.remove = function(val) {
+var index = this.indexOf(val);
+if (index > -1) {
+this.splice(index, 1);
+}
+};
 var roleList=new Array();
 var monkey;
 var alien;
 var canvas;
 var zzsakura;
+var anum=14;
 function Role(){
 	var role=new Object();
 	role.x=500;
 	role.y=320;
-	role.state=0;//0静止 1移动 2攻击
+	role.state=0;//0静止 1移动 2攻击 3死亡
 	role.direction=3;//     0上
 //						 3左边   	1右  
 //                          2下
 	role.hp=100;
-	role.speed=20;
+	role.speed=1;
 	role.moveState=0;
 	role.imgs=new Array();
 	role.img=null;
@@ -50,6 +63,79 @@ function Role(){
 	role.cxt=role.canvas.getContext("2d");
 	return role;
 }
+function alien(){
+	var alien=new Role();
+	alien.x=600;
+	alien.y=100;	
+	//alien.state=1;
+	alien.canvas.width=110; 
+	alien.canvas.height=110;
+	for (i=1;i<=4;i++)
+	{
+	var img=new Image();
+	img.src="img/alien/"+i+".png";
+	img.style.transform ='rotate(100deg)';
+	alien.imgs.push(img);
+	}
+	alien.img=alien.imgs[0];
+	alien.refresh=function(){
+
+		switch(this.state){
+			case 0://静止
+				//this.moveState=0;
+				//this.img=this.imgs[this.moveState];
+				if(this.moveState>3*anum)
+					this.moveState=0;
+				if(this.moveState%anum==0)
+				this.img=this.imgs[this.moveState/anum];
+				this.moveState++;
+				break;
+			case 1://运动
+				if(this.moveState>=3*anum)
+					this.moveState=0;
+				if(this.moveState%anum==0)
+				this.img=this.imgs[this.moveState/anum];
+				this.moveState++;
+				this.realMove();
+				break;
+			case 2://攻击
+				if(this.moveState>=8){	
+					this.state=0;
+				}
+				if(this.moveState==5)
+					roleList.push(new Banana(this));
+				this.img=this.imgs[3+this.moveState];
+				this.moveState++;
+				break;
+		}
+
+			this.cxt.fillStyle="#ffffff";
+			this.cxt.clearRect(0,0,110,110);
+			this.cxt.drawImage(this.img,-5,0);
+	}
+	alien.attack=function(){
+		if(this.state!=2){
+			this.state=2;
+			this.moveState=0;
+			if(this.angle>0){
+				if(this.direction!=3)
+					this.cxt.transform(-1,0,0,1,100,0);
+				this.direction=3;
+			}
+			else {
+				if(this.direction!=1)
+					this.cxt.transform(-1,0,0,1,100,0);
+				this.direction=1;
+			}
+		}
+	}
+	alien.setAngle=function(x,y){
+		this.angle=(y-this.y-50)/(x-this.x-50);
+		//console.log("monkey设置角度"+this.angle);
+	}
+	
+	return alien;
+}
 function Monkey(){
 	var monkey=new Role();
 	for (i=1;i<=12;i++)
@@ -68,19 +154,21 @@ function Monkey(){
 				this.img=this.imgs[this.moveState];
 				break;
 			case 1://运动
-				if(this.moveState>=3)
+				if(this.moveState>=3*anum)
 					this.moveState=0;
-				this.img=this.imgs[this.moveState];
+				if(this.moveState%anum==0)
+				this.img=this.imgs[this.moveState/anum];
 				this.moveState++;
 				this.realMove();
 				break;
 			case 2://攻击
-				if(this.moveState>=8){	
+				if(this.moveState>=8*anum){	
 					this.state=0;
 				}
-				if(this.moveState==5)
+				if(this.moveState==5*anum)
 					roleList.push(new Banana(this));
-				this.img=this.imgs[3+this.moveState];
+				if(this.moveState%anum==0)
+				this.img=this.imgs[3+this.moveState/anum];
 				this.moveState++;
 				break;
 		}
@@ -129,19 +217,36 @@ function Banana(monkey){
 	}
 	banana.refresh=function(){
 			
-				if(this.moveState>=1){
-					this.moveState=0;
-				}
+			switch(this.state){
+			case 0://静止
+				this.moveState=0;
 				this.img=this.imgs[this.moveState];
-				this.moveState++;
+				break;
+			case 1://运动
+				this.moveState=0;
+				this.img=this.imgs[this.moveState];
 				this.realMove();
+				if(isTouch(this,alien)){
+					this.state=3;			
+				}
+				break;
+			case 3://死亡
+				if(this.moveState/anum>=5){
+					roleList.remove(this);
+				}
+				if(this.moveState%anum==0)
+					this.img=this.imgs[this.moveState/anum];
+				this.moveState++;
+				break;
+			}
 				this.cxt.fillStyle="#ffffff";
 				this.cxt.clearRect(0,0,100,100);
 				this.cxt.drawImage(this.img,50-this.img.width/2,50-this.img.height/2);
 				
 	}
 	banana.direction=monkey.direction;
-	banana.speed=50;
+	banana.state=1;
+	banana.speed=anum;
 	banana.y=monkey.y;
 	banana.x=monkey.direction==3? monkey.x-50:monkey.x+50;
 	banana.angle=monkey.angle;
@@ -151,25 +256,36 @@ function Banana(monkey){
 	//banana.cxt.transform(0.70710678118655,0.70710678118655,-0.70710678118655,0.70710678118655,0,0);
 	return banana;
 }
+function isTouch(a,b){
+	var m=a.x-b.x;
+	var n=a.y-b.y;
+	
+	if(m*m+n*n<=1600){
+		return true;
+	}else{
+		return false;
+	}
+}
 
 function show(){
 	var h=(screen.availHeight-500)/2;
 	var w=(screen.availWidth-800)/2;
 	window.open("html/info.html","","height=500, width=800,top="+h+",left="+w+", toolbar =no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
 }
-function startMainThread(){
-	window.setInterval(main,200);
-}
+
 function main(){
 	for (var i = 0; i <roleList.length; i++) {
 		roleList[i].refresh();
 	}
+	draw();
 }
 
 function init(){
 	canvas=document.getElementById("myCanvas");
 	monkey=new Monkey();
+	alien=new alien();
 	roleList.push(monkey);
+	roleList.push(alien);
 	canvas.onmousemove=function(e){
 		var x=e.clientX;
 		var y=e.clientY;
@@ -206,8 +322,7 @@ function drawRole(player,cxt){
 }
 function start(){
 	init();
-	window.setInterval(draw,200);
-	startMainThread();
+	window.setInterval(main,16);
 }
 function move(code,role){
 		role.state=1;
@@ -236,9 +351,24 @@ window.onkeydown=function(event){
    //if(code >=37&&code<= 40){
    //   move(code,monkey);
 	if(code ==37 || code== 39){
-      move(code,monkey); 	  
+      move(code,monkey);
    }else if(code ==32){
 	  monkey.attack();
+   }else{
+	   switch(code){
+			case 87:
+		     move(38,alien);
+			break;
+			case 83:
+		     move(40,alien);
+			break;
+			case 65:
+		     move(37,alien);
+			break;
+			case 68:
+		     move(39,alien);
+			break;
+	   }
    }
  }
 function stop(code,role){

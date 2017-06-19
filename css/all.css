@@ -1,8 +1,23 @@
-
-#links a{
-	text-decoration: none;
-	font-weight:bold;
-	color:gray
+body{
+	background-color: black;
+}
+#header{
+	color: #c0c0c0;
+	font-family: "新宋体";
+}
+#gb{
+	position: absolute;
+	top: 75px;
+	left: 328px;
+	width: 7px;
+	height: 4px;
+	background-color: #c0c0c0;
+}
+#info{
+	color: #c0c0c0;
+	font-family: "新宋体";
 }
 
-
+a{
+	text-decoration: none;
+}

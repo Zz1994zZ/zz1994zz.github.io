@@ -32,12 +32,13 @@ function Role(){
 	role.actionNum=0;
 	role.dx=0;
 	role.dy=0;
+	role.direction=3;
 	role.refresh=function(){
 		//console.log("未定义刷新！")
 		};
 	role.realMove=function(){
-		 role.x =  role.x +  role.dx;
-		 role.y =  role.y +  role.dy;
+		 this.x =  this.x +  this.dx;
+		 this.y =  this.y +  this.dy;
 	}
 	role.setAngle=function(x,y){
 		var a=y-this.y;
@@ -47,15 +48,14 @@ function Role(){
 		this.dy=Math.abs(this.speed*Math.sin(angle))*(a>0? 1:-1);
 	}
 	role.moveTo=function(x,y){
-		role.targetX=x;
-		role.targetY=y;
+		this.state=1;
+		this.targetX=x;
+		this.targetY=y;
 		var a=x-this.x;
 		var b=y-this.y;
 		var lengh=Math.sqrt(a*a+b*b);
 		this.actionNum=lengh/this.speed;
 		this.setAngle(x,y);
-		this.state=1;
-		//
 	}
 	role.canvas=document.createElement('canvas');
 	role.canvas.width=100; 
@@ -70,6 +70,7 @@ function alien(){
 	//alien.state=1;
 	alien.canvas.width=110; 
 	alien.canvas.height=110;
+	alien.direction=1;
 	for (i=1;i<=4;i++)
 	{
 	var img=new Image();
@@ -89,6 +90,17 @@ function alien(){
 				if(this.moveState%anum==0)
 				this.img=this.imgs[this.moveState/anum];
 				this.moveState++;
+				//继续移动
+				if((this.actionNum<=0)&&(Math.floor(Math.random()*1000)>=90))
+					this.moveTo(Math.floor(Math.random()*1200),Math.floor(Math.random()*300));
+				//调整方向
+				if((this.dx>0)&&(this.direction==1)){
+					this.cxt.transform(-1,0,0,1,100,0);
+					this.direction=3;
+				}else if((this.dx<0)&&(this.direction=3)){
+					this.cxt.transform(-1,0,0,1,100,0);
+					this.direction=1;
+				}
 				break;
 			case 1://运动
 				if(this.actionNum>0){
@@ -174,21 +186,22 @@ function Monkey(){
 			this.cxt.clearRect(0,0,100,100);
 			this.cxt.drawImage(this.img,20,20);
 	}
+	monkey.realMove=function(){
+		 this.x =  this.x +  this.dx;
+	}
 	monkey.attack=function(){
 		
 		if(this.state!=2){
 			this.state=2;
 			this.moveState=0;
-			/*if(this.angle>0){
-				if(this.direction!=3)
+			if(this.dx>0&&this.direction==3){
 					this.cxt.transform(-1,0,0,1,100,0);
-				this.direction=3;
+					this.direction=1;
 			}
-			else {
-				if(this.direction!=1)
+			else if(this.dx<0&&this.direction==1){
 					this.cxt.transform(-1,0,0,1,100,0);
-				this.direction=1;
-			}*/
+					this.direction=3;
+			}
 		}
 		
 	}
@@ -227,7 +240,9 @@ function Banana(monkey){
 				this.img=this.imgs[this.moveState];
 				this.realMove();
 				if(isTouch(this,alien)){
-					this.state=3;			
+					this.state=3;
+					alien.state=3;
+					show();
 				}
 				break;
 			case 3://死亡
@@ -281,7 +296,7 @@ function init(){
 	zzsakura.src="img/sakura.png";
 	
 		
-	canvas.onmousemove=function(e){
+	/*canvas.onmousemove=function(e){
 		var x=e.clientX-100;
 		var y=e.clientY-70;
 		//for (var i = 0; i <roleList.length; i++) {
@@ -289,8 +304,14 @@ function init(){
 		//}
 		//roleList.push(new Banana());
 		//monkey.attack();
-		alien.moveTo(x,y);
+		//alien.moveTo(x,y);
 		monkey.setAngle(x,y);
+	}*/
+	canvas.onmousedown=function(e){
+		var x=e.clientX-100;
+		var y=e.clientY-70;
+		monkey.setAngle(x,y);
+		monkey.attack();
 	}
 }
 function draw(){
@@ -318,15 +339,28 @@ function start(){
 	init();
 	window.setInterval(main,16);
 }
-
+//显示名片
+function show(){
+	var h=(screen.availHeight-500)/2;
+	var w=(screen.availWidth-800)/2;
+	window.open("html/info.html","","height=500, width=800,top="+h+",left="+w+", toolbar =no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
+}
 window.onkeydown=function(event){
    var code = event.keyCode;
    switch(code){
 	case 37:
-		monkey.moveTo(monkey.x-monkey.speed,monkey.y);
+			if(monkey.direction==1){
+					monkey.cxt.transform(-1,0,0,1,100,0);
+					monkey.direction=3;
+			}
+			monkey.moveTo(0,monkey.y);
 		break;
 	case 39:
-		monkey.moveTo(monkey.x+monkey.speed,monkey.y);
+			if(monkey.direction==3){
+					monkey.cxt.transform(-1,0,0,1,100,0);
+					monkey.direction=1;
+			}
+		monkey.moveTo(1200,monkey.y);
 		break;
 	case 32:
 		monkey.attack();

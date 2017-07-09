@@ -343,7 +343,12 @@ function start(){
 function show(){
 	var h=(screen.availHeight-500)/2;
 	var w=(screen.availWidth-800)/2;
-	window.open("html/info.html","","height=500, width=800,top="+h+",left="+w+", toolbar =no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
+	// move the window to 0,0 (X,Y)
+	window.moveTo(w, h);
+	// resize the window to 800x600
+	window.resizeTo(800, 500);
+	location.href='html/info.html';
+	//window.open("html/info.html","","height=500, width=800,top="+h+",left="+w+", toolbar =no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
 }
 window.onkeydown=function(event){
    var code = event.keyCode;

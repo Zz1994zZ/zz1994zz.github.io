@@ -1,4 +1,4 @@
-﻿<krpano version="1.19" title="实验室">
+﻿<krpano version="1.19" title="Virtual Tour">
 
 	<include url="skin/vtourskin.xml" />
 
@@ -14,10 +14,10 @@
 	               webvr_gyro_keeplookingdirection="false"
 	               webvr_prev_next_hotspots="true"
 	               littleplanetintro="false"
-	               title="true"
-	               thumbs="false"
+	               title="false"
+	               thumbs="true"
 	               thumbs_width="120" thumbs_height="80" thumbs_padding="10" thumbs_crop="0|40|240|160"
-	               thumbs_opened="false"
+	               thumbs_opened="true"
 	               thumbs_text="false"
 	               thumbs_dragging="true"
 	               thumbs_onhoverscrolling="false"
@@ -38,7 +38,7 @@
 	               layout_maxwidth="814"
 	               controlbar_width="-24"
 	               controlbar_height="40"
-	               controlbar_offset="20"
+	               controlbar_offset="-40"
 	               controlbar_offset_closed="-40"
 	               controlbar_overlap.no-fractionalscaling="10"
 	               controlbar_overlap.fractionalscaling="0"
@@ -76,32 +76,32 @@
 
 
 	
-	<scene name="scene_PANO_20170704_074318" title="PANO_20170704_074318" onstart="" thumburl="panos/PANO_20170704_074318.tiles/thumb.jpg" lat="30.58018269" lng="114.32489033" heading="0.0">
+	<scene name="scene_23r58PICawI_1024" title="23r58PICawI_1024" onstart="" thumburl="panos/23r58PICawI_1024.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="range" vlookatmin="-45.000" vlookatmax="45.000" />
 
-		<preview url="panos/PANO_20170704_074318.tiles/preview.jpg" />
+		<preview url="panos/23r58PICawI_1024.tiles/preview.jpg" />
 
 		<image>
-			<cube url="panos/PANO_20170704_074318.tiles/pano_%s.jpg" />
+			<cube url="panos/23r58PICawI_1024.tiles/pano_%s.jpg" />
 
-			<cube url="panos/PANO_20170704_074318.tiles/mobile/pano_%s.jpg" devices="mobile" />
+			<cube url="panos/23r58PICawI_1024.tiles/mobile/pano_%s.jpg" devices="mobile" />
 		</image>
 
 		<!-- place your scene hotspots here -->
 
 	</scene>
 
-	<scene name="scene_PANO_20170704_074404" title="PANO_20170704_074404" onstart="" thumburl="panos/PANO_20170704_074404.tiles/thumb.jpg" lat="30.58015719" lng="114.32498389" heading="0.0">
+	<scene name="scene_269046_20151020200817090200_1" title="269046_20151020200817090200_1" onstart="" thumburl="panos/269046_20151020200817090200_1.tiles/thumb.jpg" lat="" lng="" heading="">
 
-		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="range" vlookatmin="-40.982" vlookatmax="40.982" />
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="range" vlookatmin="-69.900" vlookatmax="69.900" />
 
-		<preview url="panos/PANO_20170704_074404.tiles/preview.jpg" />
+		<preview url="panos/269046_20151020200817090200_1.tiles/preview.jpg" />
 
 		<image>
-			<cube url="panos/PANO_20170704_074404.tiles/pano_%s.jpg" />
+			<cube url="panos/269046_20151020200817090200_1.tiles/pano_%s.jpg" />
 
-			<cube url="panos/PANO_20170704_074404.tiles/mobile/pano_%s.jpg" devices="mobile" />
+			<cube url="panos/269046_20151020200817090200_1.tiles/mobile/pano_%s.jpg" devices="mobile" />
 		</image>
 
 		<!-- place your scene hotspots here -->

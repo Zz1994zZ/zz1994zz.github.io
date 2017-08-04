@@ -15,7 +15,7 @@ window.onload=function() {
 
 function start(){
 	
-	s=setInterval("showInfo()",100);
+	s=setInterval("showInfo()",20);
 }
 var s;
 var num=0;
@@ -25,9 +25,44 @@ var infos=new String(
 	"年龄：21"+"##"+
 	"爱好：看电视、上网、有趣的人和事"+"##"+
 "   ﹎ ┈ ┈ .o┈ ﹎  ﹎.. ○"+"#"+
-"﹎┈﹎ ●&nbsp○ .﹎ ﹎o▂▃▅▆"+"#"+
+"﹎┈﹎ ●&emsp;○ .﹎ ﹎o▂▃▅▆"+"#"+
 "┈ ┈ /█\\/▓\\ ﹎ ┈ ﹎﹎ ┈ ﹎"+"#"+
-"▅▆▇█████▇▆▅▃▂┈﹎"
+"▅▆▇█████▇▆▅▃▂┈﹎"+"#"+"█&emsp;&emsp;█&emsp;&emsp;█"+"#"+
+"███████████████████████████████"+"#"+
+"█&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;████&emsp;&emsp;&emsp;█&emsp;██████&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;█"+"#"+
+"█&emsp;█████&emsp;██&emsp;&emsp;██&emsp;&emsp;██&emsp;██&emsp;█&emsp;█████&emsp;█"+"#"+
+"█&emsp;█&emsp;&emsp;&emsp;█&emsp;█████&emsp;&emsp;█&emsp;████&emsp;█&emsp;█&emsp;&emsp;&emsp;█&emsp;█"+"#"+
+"█&emsp;█&emsp;&emsp;&emsp;█&emsp;█&emsp;███&emsp;&emsp;██&emsp;&emsp;&emsp;&emsp;██&emsp;█&emsp;&emsp;&emsp;█&emsp;█"+"#"+
+"█&emsp;█&emsp;&emsp;&emsp;█&emsp;█&emsp;&emsp;█████&emsp;&emsp;█████&emsp;█&emsp;&emsp;&emsp;█&emsp;█"+"#"+
+"█&emsp;█████&emsp;████&emsp;&emsp;█&emsp;█&emsp;█&emsp;&emsp;&emsp;█&emsp;█████&emsp;█"+"#"+
+"█&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;█&emsp;█&emsp;█&emsp;█&emsp;█&emsp;█&emsp;█&emsp;█&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;█"+"#"+
+"███████████&emsp;&emsp;█████&emsp;█&emsp;&emsp;█████████"+"#"+
+"█&emsp;&emsp;███&emsp;&emsp;&emsp;█&emsp;█&emsp;██&emsp;██&emsp;██&emsp;███&emsp;&emsp;████"+"#"+
+"███&emsp;&emsp;█&emsp;█&emsp;&emsp;&emsp;██&emsp;██&emsp;&emsp;█&emsp;&emsp;&emsp;██&emsp;&emsp;█&emsp;&emsp;██"+"#"+
+"█&emsp;&emsp;████&emsp;███&emsp;██&emsp;&emsp;███&emsp;██&emsp;&emsp;&emsp;██████"+"#"+
+"███&emsp;█&emsp;&emsp;█&emsp;&emsp;&emsp;██&emsp;&emsp;██&emsp;███████&emsp;█████"+"#"+
+"███&emsp;&emsp;█&emsp;&emsp;&emsp;&emsp;&emsp;█&emsp;&emsp;█&emsp;&emsp;█&emsp;&emsp;&emsp;&emsp;█&emsp;&emsp;████&emsp;█"+"#"+
+"███&emsp;█&emsp;&emsp;█&emsp;██████&emsp;&emsp;&emsp;█&emsp;&emsp;██&emsp;&emsp;&emsp;█&emsp;&emsp;&emsp;█"+"#"+
+"███&emsp;█&emsp;█&emsp;&emsp;██&emsp;&emsp;&emsp;&emsp;&emsp;█&emsp;█&emsp;█&emsp;&emsp;█&emsp;&emsp;█&emsp;███"+"#"+
+"█&emsp;&emsp;&emsp;█&emsp;&emsp;█████&emsp;███&emsp;&emsp;&emsp;&emsp;██&emsp;&emsp;&emsp;&emsp;█&emsp;█&emsp;█"+"#"+
+"█&emsp;&emsp;█&emsp;&emsp;█&emsp;&emsp;&emsp;█&emsp;&emsp;&emsp;&emsp;█████&emsp;██████&emsp;███"+"#"+
+"█&emsp;&emsp;██&emsp;███&emsp;███&emsp;██&emsp;█&emsp;█&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;█"+"#"+
+"█&emsp;&emsp;&emsp;&emsp;█&emsp;&emsp;&emsp;&emsp;██&emsp;&emsp;██&emsp;█&emsp;&emsp;&emsp;██&emsp;█████&emsp;█"+"#"+
+"█&emsp;██&emsp;&emsp;███&emsp;&emsp;█&emsp;████&emsp;██&emsp;&emsp;██&emsp;&emsp;█████"+"#"+
+"█&emsp;█&emsp;█&emsp;&emsp;&emsp;█&emsp;&emsp;&emsp;&emsp;█&emsp;&emsp;&emsp;██&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;█&emsp;&emsp;&emsp;█"+"#"+
+"█████████&emsp;█&emsp;███&emsp;&emsp;&emsp;███&emsp;███&emsp;&emsp;████"+"#"+
+"█&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;█&emsp;██&emsp;&emsp;&emsp;█&emsp;█&emsp;█&emsp;&emsp;█&emsp;█&emsp;&emsp;&emsp;███"+"#"+
+"█&emsp;█████&emsp;█&emsp;█&emsp;█&emsp;███&emsp;&emsp;&emsp;&emsp;&emsp;███&emsp;&emsp;█&emsp;&emsp;█"+"#"+
+"█&emsp;█&emsp;&emsp;&emsp;█&emsp;██&emsp;&emsp;█&emsp;&emsp;&emsp;█&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;██&emsp;&emsp;█"+"#"+
+"█&emsp;█&emsp;&emsp;&emsp;█&emsp;██&emsp;&emsp;█&emsp;████&emsp;█&emsp;&emsp;██&emsp;█&emsp;█&emsp;██"+"#"+
+"█&emsp;█&emsp;&emsp;&emsp;█&emsp;██&emsp;&emsp;&emsp;&emsp;&emsp;█&emsp;█████&emsp;&emsp;&emsp;&emsp;&emsp;█&emsp;██"+"#"+
+"█&emsp;█████&emsp;█&emsp;█&emsp;&emsp;██&emsp;█&emsp;████&emsp;████&emsp;█&emsp;█"+"#"+
+"█&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;█&emsp;██&emsp;&emsp;&emsp;█████&emsp;█&emsp;&emsp;&emsp;██&emsp;███"+"#"+
+"███████████████████████████████"
+
+
+
+
 //"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&"+"#"+
 //"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&"+"#"+
 //"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&"+"#"+

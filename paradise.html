@@ -50,6 +50,9 @@
 															</div>
 						}
 					});
+					function sortDate(a,b){  
+					   return a.date>b.date; 
+					};
 				 var WordsList = React.createClass({
 											  getInitialState: function() {
 																			return {
@@ -57,11 +60,21 @@
 																			};
 																		  },
 											componentDidMount: function() {
-																			$.post(this.props.source,function(result) {
+																			$.get(this.props.source,function(result) {
 																			  var lastGist = result;
+																			  var words = new Array();
+																			  lastGist.forEach(function(val, index) {
+																				var obj = {};
+																				obj.auther = '游客朋友';
+																				obj.content = val.body;
+																				obj.date = val.title;
+																				console.log(val, index);
+																				words.push(obj);
+																			  });
+																			  words.sort(sortDate)
 																			  if (this.isMounted()) {
 																				this.setState({
-																				  wordsList: lastGist
+																				  wordsList: words
 																				});
 																			  }
 																			}.bind(this));
@@ -70,14 +83,14 @@
 																		return <div>
 																				{
 																				this.state.wordsList.reverse().map(function(item){
-																						return <Words  username={item.auther.username} content={item.content} date={getLocalTime(item.date/1000)} />
+																						return <Words  username={item.auther} content={item.content} date={item.date} />
 																					})
 																				}
 																				</div>
 																	 }
 												});
 				  ReactDOM.render(
-					<WordsList source="http://101.200.54.142:8080/blog/getAllWords"/>,
+					<WordsList source="https://api.github.com/repos/Zz1994zZ/zz1994zz.github.io/issues"/>,
 					document.getElementById('example')
 				  );
 				  
@@ -156,7 +169,7 @@
 		</div>
 	
 	</div>
-			<button id="btn1">发布</button>
+			<!--<button id="btn1">发布</button>-->
 
 	<div id="dg" style="z-index: 9999; position: fixed ! important; right: 100px; top: 50%;">  
 		<table width="100%" style="position: absolute; width:260px; right: 0px; top: 0px;">  
@@ -280,13 +293,13 @@
         // uploader 为一个plupload对象，继承了所有plupload的方法，参考http://plupload.com/docs
     }
 		//
-		var editor = new wangEditor('div1');
+		<!--var editor = new wangEditor('div1');
 		editor.config.customUpload = true;  // 设置自定义上传的开关
 		editor.config.customUploadInit = uploadInit;  // 配置自定义上传初始化事件，uploadInit方法在上面定义了
-		editor.create();
+		editor.create();-->
 	</script>
 	<!--这里引用jquery和wangEditor.js-->
-	<script type="text/javascript">
+	<!--<script type="text/javascript">
 		$('#btn1').click(function () {
 			// 获取编辑器区域完整html代码
 			var html = editor.$txt.html();
@@ -302,6 +315,6 @@
 								location.reload();
 					});
 		});
-	</script>
+	</script>-->
 	</body>
 </html>

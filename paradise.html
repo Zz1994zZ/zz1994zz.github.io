@@ -51,7 +51,7 @@
 						}
 					});
 					function sortDate(a,b){  
-					   return a.date>b.date; 
+					   return a.date>b.date? 1:-1; 
 					};
 				 var WordsList = React.createClass({
 											  getInitialState: function() {
@@ -68,10 +68,10 @@
 																				obj.auther = '游客朋友';
 																				obj.content = val.body;
 																				obj.date = val.title;
-																				console.log(val, index);
 																				words.push(obj);
 																			  });
-																			  words.sort(sortDate)
+																			  words.sort(sortDate);
+																			  console.log(words);
 																			  if (this.isMounted()) {
 																				this.setState({
 																				  wordsList: words

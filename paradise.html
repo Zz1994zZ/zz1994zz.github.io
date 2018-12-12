@@ -12,90 +12,22 @@
 		 <link href="http://cdn.bootcss.com/bootstrap/3.0.1/css/bootstrap-theme.min.css" rel="stylesheet">
 		 <link href="http://cdn.bootcss.com/bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet">
 		 
-		 <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
-		 <script type="text/javascript" src="http://cdn.bootcss.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
-		 <script type="text/javascript" src="js/blogJS/react.js"></script>
-		 <script type="text/javascript" src="js/blogJS/react-dom.js"></script>
-		 <script type="text/javascript" src="js/blogJS/browser.min.js"></script>
+		<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
 		 <!--这里引用jquery和wangEditor.js-->
-	
 		<script type="text/javascript" src="js/dist/js/wangEditor.min.js"></script>
 		<script type="text/javascript" src="http://cdn.staticfile.org/qiniu-js-sdk/1.0.14-beta/qiniu.min.js"></script>
 		<script type="text/javascript" src="http://cdn.staticfile.org/plupload/2.1.5/plupload.full.min.js"></script>
 		<script type="text/javascript" src="http://qtestbucket.qiniudn.com/demo/CryptoJS.js"></script>
 		<script type="text/javascript" src="js/uptoken.js"></script>
-	
-		 
-		 
-		 <script>
-						 function getLocalTime(nS) {     
-						   return new Date(parseInt(nS) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');     
-						}     
-		 </script>
-		 <script type="text/babel">
-				 var Words = React.createClass({
-						render: function() {
-												return 		<div className="row clearfix">
-																<div className="col-md-8 column">
-																	<h2>
-																		 
-																	</h2>
-																	<div dangerouslySetInnerHTML={{__html: this.props.content}} />		
-																	<p>
-																		 <a className="btn" href="#">{this.props.username}»</a>{this.props.date}
-																	</p>
-																</div>
-																<div className="col-md-4 column">
-																</div>
-															</div>
-						}
-					});
-					function sortDate(a,b){  
-					   return a.date>b.date? 1:-1; 
-					};
-				 var WordsList = React.createClass({
-											  getInitialState: function() {
-																			return {
-																			  wordsList: []
-																			};
-																		  },
-											componentDidMount: function() {
-																			$.get(this.props.source,function(result) {
-																			  var lastGist = result;
-																			  var words = new Array();
-																			  lastGist.forEach(function(val, index) {
-																				var obj = {};
-																				obj.auther = '游客朋友';
-																				obj.content = val.body;
-																				obj.date = val.title;
-																				words.push(obj);
-																			  });
-																			  words.sort(sortDate);
-																			  console.log(words);
-																			  if (this.isMounted()) {
-																				this.setState({
-																				  wordsList: words
-																				});
-																			  }
-																			}.bind(this));
-																		  },
-												  render: function() {
-																		return <div>
-																				{
-																				this.state.wordsList.reverse().map(function(item){
-																						return <Words  username={item.auther} content={item.content} date={item.date} />
-																					})
-																				}
-																				</div>
-																	 }
-												});
-				  ReactDOM.render(
-					<WordsList source="https://api.github.com/repos/Zz1994zZ/zz1994zz.github.io/issues"/>,
-					document.getElementById('example')
-				  );
-				  
-		</script>
-		</head>
+		<!--vue 和 element-->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<!-- 引入组件库 -->
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+		<!-- axios-->
+		<script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+	</head>
 	<body>
 		<div id="calendar"></div>
 		<div class="container">
@@ -155,20 +87,31 @@
 					</ul>
 				</div>
 			</nav>
-			<div id="example"></div>
-			<!--<div class="row clearfix" >
-				<div class="col-md-8 column">
-					<div id="div1" style="height:400px;max-height:500px;">
-						<p>请输入内容...</p>
-					</div>
-					<a name="myeditor"/>
+			<div id="app">
+				<el-row>
+				  <el-col :span="16" v-for="words in wordsList" style="padding-bottom: 10px">
+					<el-card :body-style="{ padding: '0px' }">
+					  <div style="padding: 14px;" v-html='words.body'>
+					  </div>
+					  <div style="text-align:right;padding:10px">——<a><i>游客朋友<i> </a>于 {{words.title}}</div>
+					</el-card>
+				  </el-col>
+				</el-row>
+				<div class="block" style="text-align:center">
+						  <el-pagination
+							layout="prev, pager, next"
+							:total="totalPage*30"
+							:current-page.sync="page"
+							@current-change="handleCurrentChange"
+							:page-size="30">
+						  </el-pagination>
 				</div>
-				<div class="col-md-4 column">
-				</div>
-			</div>-->
+			</div>
+			
 		</div>
-	
+		
 	</div>
+	
 			<!--<button id="btn1">发布</button>-->
 
 	<div id="dg" style="z-index: 9999; position: fixed ! important; right: 100px; top: 50%;">  
@@ -185,136 +128,7 @@
 			</tr>
 			
 		</table>  
-	</div>  
-
-	<script type="text/javascript">
-		//
-		function printLog(title, info) {
-        window.console && console.log(title, info);
-		}
-
-    // 初始化七牛上传
-    function uploadInit() {
-        // this 即 editor 对象
-        var editor = this;
-        // 触发选择文件的按钮的id
-        var btnId = editor.customUploadBtnId;
-        // 触发选择文件的按钮的父容器的id
-        var containerId = editor.customUploadContainerId;
-
-		var upToken=getUpToken();
-        // 创建上传对象
-        var uploader = Qiniu.uploader({
-            runtimes: 'html5,flash,html4',    //上传模式,依次退化
-            browse_button: btnId,       //上传选择的点选按钮，**必需**
-            //uptoken_url: '/uptoken',
-                //Ajax请求upToken的Url，**强烈建议设置**（服务端提供）
-             //uptoken : 'CR-p7NcV5mTi1mIh40IS0qSl5R4-444J8kmaOC62:ZLo1N-4v0JVPUtwvT9C-Id0r2Xg=:eyJzY29wZSI6Inp6aW1nIiwiZGVhZGxpbmUiOjE1MDEyNzMyMDd9',
-			 uptoken : upToken,
-			 
-                //若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
-            // unique_names: true,
-                // 默认 false，key为文件名。若开启该选项，SDK会为每个文件自动生成key（文件名）
-            // save_key: true,
-                // 默认 false。若在服务端生成uptoken的上传策略中指定了 `sava_key`，则开启，SDK在前端将不对key进行任何处理
-            domain: 'http://qiniu.withzz.cn/',
-                //bucket 域名，下载资源时用到，**必需**
-            container: containerId,           //上传区域DOM ID，默认是browser_button的父元素，
-            max_file_size: '100mb',           //最大文件体积限制
-            flash_swf_url: '../js/plupload/Moxie.swf',  //引入flash,相对路径
-            filters: {
-                    mime_types: [
-                      //只允许上传图片文件 （注意，extensions中，逗号后面不要加空格）
-                      { title: "图片文件", extensions: "jpg,gif,png,bmp" }
-                    ]
-            },
-            max_retries: 3,                   //上传失败最大重试次数
-            dragdrop: true,                   //开启可拖曳上传
-            drop_element: 'editor-container',        //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
-            chunk_size: '4mb',                //分块上传时，每片的体积
-            auto_start: true,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传
-            init: {
-                'FilesAdded': function(up, files) {
-                    plupload.each(files, function(file) {
-                        // 文件添加进队列后,处理相关的事情
-                        printLog('on FilesAdded');
-                    });
-                },
-                'BeforeUpload': function(up, file) {
-                    // 每个文件上传前,处理相关的事情
-                    printLog('on BeforeUpload');
-                },
-                'UploadProgress': function(up, file) {
-                    // 显示进度条
-                    editor.showUploadProgress(file.percent);
-                },
-                'FileUploaded': function(up, file, info) {
-                    // 每个文件上传成功后,处理相关的事情
-                    // 其中 info 是文件上传成功后，服务端返回的json，形式如
-                    // {
-                    //    "hash": "Fh8xVqod2MQ1mocfI4S4KpRL6D98",
-                    //    "key": "gogopher.jpg"
-                    //  }
-                    printLog(info);
-                    // 参考http://developer.qiniu.com/docs/v6/api/overview/up/response/simple-response.html
-                    
-                    var domain = up.getOption('domain');
-                    var res = $.parseJSON(info);
-                    var sourceLink = domain + res.key; //获取上传成功后的文件的Url
-
-                    printLog(sourceLink);
-
-                    // 插入图片到editor
-                    editor.command(null, 'insertHtml', '<img src="' + sourceLink + '" style="max-width:100%;"/>')
-                },
-                'Error': function(up, err, errTip) {
-                    //上传出错时,处理相关的事情
-                    printLog('on Error');
-                },
-                'UploadComplete': function() {
-                    //队列文件处理完毕后,处理相关的事情
-                    printLog('on UploadComplete');
-
-                    // 隐藏进度条
-                    editor.hideUploadProgress();
-                }
-                // Key 函数如果有需要自行配置，无特殊需要请注释
-                //,
-                // 'Key': function(up, file) {
-                //     // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
-                //     // 该配置必须要在 unique_names: false , save_key: false 时才生效
-                //     var key = "";
-                //     // do something with key here
-                //     return key
-                // }
-            }
-        });
-        // domain 为七牛空间（bucket)对应的域名，选择某个空间后，可通过"空间设置->基本设置->域名设置"查看获取
-        // uploader 为一个plupload对象，继承了所有plupload的方法，参考http://plupload.com/docs
-    }
-		//
-		<!--var editor = new wangEditor('div1');
-		editor.config.customUpload = true;  // 设置自定义上传的开关
-		editor.config.customUploadInit = uploadInit;  // 配置自定义上传初始化事件，uploadInit方法在上面定义了
-		editor.create();-->
-	</script>
-	<!--这里引用jquery和wangEditor.js-->
-	<!--<script type="text/javascript">
-		$('#btn1').click(function () {
-			// 获取编辑器区域完整html代码
-			var html = editor.$txt.html();
-
-			// 获取编辑器纯文本内容
-			var text = editor.$txt.text();
-
-			// 获取格式化后的纯文本
-			var formatText = editor.$txt.formatText();
-			console.log(html);
-				$.post("http://101.200.54.142:8080/blog/publish",{content:html},function(result) {
-					  			console.log(result);
-								location.reload();
-					});
-		});
-	</script>-->
+	</div>
 	</body>
+	<script src="js/vue/paradise.js"></script>
 </html>

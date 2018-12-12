@@ -29,6 +29,7 @@
 		<script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
 	</head>
 	<body>
+	<div id="app">
 		<div id="calendar"></div>
 		<div class="container">
 	<div class="row clearfix">
@@ -87,7 +88,7 @@
 					</ul>
 				</div>
 			</nav>
-			<div id="app">
+			<div>
 				<el-row>
 				  <el-col :span="16" v-for="words in wordsList" style="padding-bottom: 10px">
 					<el-card :body-style="{ padding: '0px' }">
@@ -97,25 +98,15 @@
 					</el-card>
 				  </el-col>
 				</el-row>
-				<div class="block" style="text-align:center">
-						  <el-pagination
-							layout="prev, pager, next"
-							:total="totalPage*30"
-							:current-page.sync="page"
-							@current-change="handleCurrentChange"
-							:page-size="30">
-						  </el-pagination>
-				</div>
 			</div>
 			
 		</div>
-		
 	</div>
 	
 			<!--<button id="btn1">发布</button>-->
 
-	<div id="dg" style="z-index: 9999; position: fixed ! important; right: 100px; top: 50%;">  
-		<table width="100%" style="position: absolute; width:260px; right: 0px; top: 0px;">  
+	<div id="dg" style="z-index: 9999; position: fixed ! important; right: 0px; top: 50%;">  
+		<table width="100%" style="position: fixed; width:160px; right: 0px; top: 30%;">  
 			<tr>
 				<td>
 				<a href="#top">回到顶部</button>
@@ -123,11 +114,49 @@
 			</tr>
 			<tr>
 				<td>
-				<a href="#myeditor">有话要说</button>
+				<a href="#myeditor" @click="showInput">有话要说</button>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<a href="#myeditor">————————</button>
+				</td>
+			</tr>
+			<tr v-if="linkMap.first">
+				<td>
+				<a href="#myeditor" @click="getList('first')">现在</button>
+				</td>
+			</tr>
+			<tr v-if="linkMap.prev">
+				<td>
+				<a href="#myeditor" @click="getList('prev')">最近</button>
+				</td>
+			</tr>
+			<tr v-if="linkMap.next">
+				<td>
+				<a href="#myeditor" @click="getList('next')">从前</button>
+				</td>
+			</tr>
+			<tr v-if="linkMap.last">
+				<td>
+				<a href="#myeditor" @click="getList('last')">开始</button>
 				</td>
 			</tr>
 			
 		</table>  
+	</div>
+		<a name="myeditor"/>
+		<el-col :span="16" style="text-align: center; padding: 15px;" v-show="dialogFormVisible">
+			<div class="row clearfix">
+					<div id="div1" style="height:400px">
+					</div>
+			</div>
+			<div v-if="dialogFormVisible">
+				<el-button @click="dialogFormVisible = false">取 消</el-button>
+				<el-button type="primary" @click="publish">发 布</el-button>
+			</div>	
+		</el-col>
+		
 	</div>
 	</body>
 	<script src="js/vue/paradise.js"></script>

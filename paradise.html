@@ -101,9 +101,13 @@
 				<el-row>
 				  <el-col :span="16" v-for="words in wordsList" style="padding-bottom: 10px">
 					<el-card :body-style="{ padding: '0px' }">
-					  <div style="padding: 14px;" v-html='words.body'>
-					  </div>
-					  <div style="text-align:right;padding:10px">——<a><i>游客朋友<i> </a>于 {{words.title}}</div>
+						<el-row>
+						  <div style="padding: 14px;" v-html='words.body'>
+						  </div>
+						</el-row>
+						<el-row>
+							<div style="text-align:right;padding:10px">——<a><i>游客朋友<i> </a>于 {{words.title}}</div>
+						</el-row>
 					</el-card>
 				  </el-col>
 				</el-row>

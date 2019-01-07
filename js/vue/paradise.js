@@ -1,6 +1,26 @@
-		function printLog(title, info) {
-        window.console && console.log(title, info);
-		}
+	/**************************************时间格式化处理************************************/
+	function dateFtt(fmt,date)   
+	{ //author: meizz   
+	  var o = {   
+		"M+" : date.getMonth()+1,                 //月份   
+		"d+" : date.getDate(),                    //日   
+		"h+" : date.getHours(),                   //小时   
+		"m+" : date.getMinutes(),                 //分   
+		"s+" : date.getSeconds(),                 //秒   
+		"q+" : Math.floor((date.getMonth()+3)/3), //季度   
+		"S"  : date.getMilliseconds()             //毫秒   
+	  };   
+	  if(/(y+)/.test(fmt))   
+		fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));   
+	  for(var k in o)   
+		if(new RegExp("("+ k +")").test(fmt))   
+	  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+	  return fmt;   
+	} 
+		
+	function printLog(title, info) {
+	window.console && console.log(title, info);
+	}
 
     // 初始化七牛上传
     function uploadInit() {
@@ -153,10 +173,30 @@ var app = new Vue({
 			// 获取格式化后的纯文本
 			//var formatText = this.editor.$txt.formatText();
 			console.log(html);
-			$.post("http://101.200.54.142:8080/blog/publish",{content:html},function(result) {
-							console.log(result);
-							location.reload();
-			});
+			let posturl = 'https://api.github.com/repositories/83021079/issues';
+			//额  这是个小号。。各位大佬别乱玩谢谢。。
+			let token = 'Basic Zm9yRGl2aWRlQ2FyZHM6NjU5M2FjYTk0YzY2M2U5YzEyODljYmU4OTI1MTIxYzEzZDZlYzcwNQ==';
+			axios(
+				  {
+						method: 'post',
+						url: posturl,
+						headers: {
+							'Authorization': token
+						},
+						data: {
+							title: dateFtt("yyyy-MM-dd hh:mm:ss",new Date()),
+							body: html
+						}
+				  })
+				  .then(function (response) {
+					console.log(response);
+					alert("发布成功！");
+					location.reload();
+				  })
+				  .catch(function (error) {
+					console.log(error);
+					alert("发布失败！");
+				  });
 			this.dialogFormVisible = false;
 			this.getList();
 	 }

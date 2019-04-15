@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>喵咪配</title>
+
+
+     <!-- VUE -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <!-- axios  -->
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/element-ui/2.4.9/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://cdn.staticfile.org/element-ui/2.4.9/index.js"></script>
+	
+	<style>
+  .text {
+    font-size: 14px;
+	padding : 5px;
+  }
+
+  .item {
+    margin-bottom: 18px;
+  }
+
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+  .clearfix:after {
+    clear: both
+  }
+
+  .box-card {
+    width: 600px;
+	align
+  }
+</style>
+
+  </head>
+<!-- NAVBAR
+================================================== -->
+  <body>
+		  <div id="app">
+			<el-card class="box-card">
+			  <div slot="header" class="clearfix">
+				<span>选择已有基因：</span>
+				  <template>
+				  <el-select clearable multiple collapse-tags filterable v-model="selected" placeholder="请选择">
+					<el-option-group
+					  v-for="group in characters"
+					  :key="group.label"
+					  :label="group.label">
+					  <el-option
+						v-for="item in group.options"
+						:key="item.value"
+						:label="item.value"
+						:value="item.value">
+					  </el-option>
+					</el-option-group>
+				  </el-select>
+			  </template>
+				
+				
+			  </div>
+			 
+			
+			   <div>
+				  <el-row v-for="o in selected" :key="o" class="text item" >
+				  
+					  <el-col :span="4">
+						<el-tag>{{ o }}</el-tag>
+					  </el-col>
+					  <el-col :span="2">
+						+
+					  </el-col>
+					  <el-col :span="4">
+						<el-tag type="danger">{{ exceptString(getFormula(o).form,o) }}</el-tag>
+					  </el-col>
+					   <el-col :span="2">
+						 =
+					  </el-col>
+					   <el-col :span="4">
+						<el-tag type="success">{{ getFormula(o).character }}</el-tag>
+					  </el-col>
+					   <el-col :span="8">
+						{{ info[getFormula(o).character].effect }}
+					  </el-col>
+				  </el-row>
+			  </div>
+			</el-card>
+			
+			<el-card class="box-card">
+				<div slot="header" class="clearfix">
+					<span>推荐配对基因：</span>
+				</div>
+				 <el-row v-for="o of getCommand()" :key="o" class="text item" >
+					<el-tag type="danger">{{ info[o].part+"————"+o }}</el-tag>
+				 </el-row>
+			</el-card>
+				 
+		  </div>
+  </body>
+</html>
+<script>
+	var characters = {
+		夜猫眼:{effect:'',part:'眼睛'},
+		眯眯眼:{effect:'',part:'眼睛'},
+		海蓝宝石:{effect:'瞄准圆扩大15%',part:'眼睛'},
+		
+		呆萌宝宝:{effect:'',part:'眼睛'},
+		怒发冲冠:{effect:'',part:'眼睛'},
+		好怕怕:{effect:'瞄准圆扩大15%',part:'眼睛'},
+		
+		死鱼眼:{effect:'',part:'眼睛'},
+		街头喵霸:{effect:'',part:'眼睛'},
+		童话萌猫:{effect:'瞄准圆扩大15%',part:'眼睛'},
+		
+		 愤怒:{effect:'',part:'嘴巴'},
+		一阵沉默:{effect:'',part:'嘴巴'},
+		开心派:{effect:'5%概率获得云纹+40',part:'嘴巴'},
+		
+		  胖嘟嘟:{effect:'',part:'嘴巴'},
+		迷三角:{effect:'',part:'嘴巴'},
+		
+		  好奇:{effect:'',part:'嘴巴'},
+		鲨鱼齿:{effect:'',part:'嘴巴'},
+		
+		咬牙切齿:{effect:'5%概率获得云纹+40',part:'嘴巴'},
+		
+		傻乎乎:{effect:'5%概率获得云纹+60',part:'嘴巴'},
+		
+		小猫妙盗:{effect:'',part:'肚皮'},
+		钻石甜心:{effect:'',part:'肚皮'},
+		超能蒙面:{effect:'逃跑概率降低15%',part:'肚皮'},
+		
+		太空战士:{effect:'',part:'肚皮'},
+		肌肉战士:{effect:'',part:'肚皮'},
+		煤堆探索:{effect:'逃跑概率降低15%',part:'肚皮'},
+		
+		美人尖:{effect:'',part:'花纹'},
+		虎斑:{effect:'',part:'花纹'},
+		小丑假面:{effect:'',part:'花纹'},
+		洋葱面具:{effect:'12%概率获得符印+1',part:'花纹'}
+	};
+	var formulas = [	
+		{
+			form:['夜猫眼','眯眯眼'],
+			character:'海蓝宝石'
+		},
+		{
+			form:['呆萌宝宝','怒发冲冠'],
+			character:'好怕怕'
+		},
+		{
+			form:['死鱼眼','街头喵霸'],
+			character:'童话萌猫'
+		},
+		{
+			form:['愤怒','一阵沉默'],
+			character:'开心派'
+		},
+		{
+			form:['胖嘟嘟','迷三角'],
+			character:'咬牙切齿'
+		},
+		{
+			form:['好奇','鲨鱼齿'],
+			character:'咬牙切齿'
+		},
+		{
+			form:['开心派','咬牙切齿'],
+			character:'傻乎乎'
+		},
+		{
+			form:['小猫妙盗','钻石甜心'],
+			character:'超能蒙面'
+		},
+		{
+			form:['太空战士','肌肉战士'],
+			character:'煤堆探索'
+		},
+		{
+			form:['美人尖','虎斑'],
+			character:'洋葱面具'
+		},
+		{
+			form:['美人尖','小丑假面'],
+			character:'洋葱面具'
+		}
+	];
+	var parts = {};
+	for(key of Object.keys(characters)){
+		console.log(key)
+		let character = characters[key];
+		if(!parts[character.part]){
+			parts[character.part] = {
+				  label: character.part,
+				  options: []
+				};
+		}
+		parts[character.part].options.push(
+			{
+				label: key,
+				value: key
+			}
+		);
+	}
+	
+	var app = new Vue({
+	  el: '#app',
+	  data: {
+	       info:characters,
+		  characters: parts,
+		   selected: [],
+	  },
+	  methods: {
+		getFormula(character){
+			for(fomula of formulas){
+				let form = fomula.form;
+				for(c of form){
+					if(c == character){
+						return fomula;
+					}
+				}
+			}
+		},
+		getCommand(){
+			let commands = [];
+			for(c of this.selected){
+				let formula = this.getFormula(c);
+				if(!formula){
+					continue;
+				}
+				let commandC = this.exceptString(formula.form,c);
+				commands.push(commandC);
+			}
+			return commands;
+		},
+		exceptString(arr,character){
+			for(c of arr){
+				if(c !=  character){
+					return c;
+				}
+			}
+		}
+	  },
+	  computed: {
+		getFormula: function (character) {
+		 for(fomula of formulas){
+				let form = fomula.form;
+				for(c of form){
+					if(c == character){
+						return fomula;
+					}
+				}
+			}
+		}
+	  },
+		mounted: function () {
+			
+		}
+	})
+</script>
+
+

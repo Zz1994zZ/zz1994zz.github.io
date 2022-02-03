@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+
+  <canvas id="myCanvas" width="300" height="300" style="border:1px solid #d3d3d3;">
+    Your browser does not support the HTML5 canvas tag.
+  </canvas>
+
+  <script>
+
+// var c=document.getElementById("myCanvas");
+// var ctx=c.getContext("2d");
+// ctx.beginPath();
+// ctx.arc(100,75,50,0,2*Math.PI);
+// ctx.stroke();
+
+  </script>
+  <script type="text/javascript">
+    var c = document.getElementById('myCanvas');
+    var ctx = c.getContext('2d');
+    var mW = c.width = 300;
+    var mH = c.height = 300;
+    var lineWidth = 5;
+    var r = mW / 2; // 中间位置
+    var cR = r - 10 * lineWidth; // 圆半径
+    var startAngle = -(1 / 2 * Math.PI); // 开始角度
+    var endAngle = startAngle + 2 * Math.PI; // 结束角度
+    var xAngle = 1 * (Math.PI / 180); // 偏移角度量
+    var fontSize = 35; // 字号大小
+    var tmpAngle = startAngle; //临时角度变量
+    var tmpAngle2 = startAngle; //临时角度变量
+    var text = '送给宝的沙糖桔～';
+    function randerLeaf(i) {
+      if (tmpAngle2 >= endAngle) {
+        return;
+      } else if (tmpAngle2 + xAngle > endAngle) {
+        tmpAngle2 = endAngle;
+      } else {
+        tmpAngle2 += xAngle;
+      }
+      // ctx.clearRect(0, 0, mW, mH);
+      //开始一个新的绘制路径
+      ctx.beginPath();
+      //定义直线的起点坐标为(10,10)
+      ctx.moveTo(mW / 2, mH / 2 - 100);
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = '#2F0000';
+      //定义直线的终点坐标为(50,10)
+      ctx.lineTo(mW / 2, -100);
+      //沿着坐标点顺序的路径绘制直线
+      ctx.stroke();
+      //关闭当前的绘制路径
+      ctx.closePath();
+      ctx.beginPath();
+      ctx.ellipse(mW / 2 + 50, mH / 2 - 90, 20, 50, 30, startAngle, tmpAngle2);
+      ctx.fillStyle = "#228B22";
+      ctx.strokeStyle = "#228B22";
+      ctx.fill();
+      ctx.stroke();
+      ctx.closePath();
+      requestAnimationFrame(randerLeaf);
+    }
+    function rander(i) {
+      if (tmpAngle >= endAngle) {
+        randerLeaf(1);
+        return;
+      } else if (tmpAngle + xAngle > endAngle) {
+        tmpAngle = endAngle;
+      } else {
+        tmpAngle += xAngle;
+      }
+      ctx.clearRect(0, 0, mW, mH);
+      //  画圈
+      ctx.beginPath();
+      ctx.lineWidth = lineWidth;
+      ctx.strokeStyle = '#FFA500';
+      ctx.fillStyle = '#FFA500';
+      // ctx.arc(r, r, cR, startAngle, tmpAngle);
+      ctx.ellipse(r, r, cR + 15, cR, 0, startAngle, tmpAngle);
+      ctx.fill();
+      ctx.closePath();
+      //  写字
+      ctx.fillStyle = '#1d89d5';
+      ctx.font = fontSize + 'px Microsoft Yahei';
+      ctx.textAlign = 'center';
+      text.split()
+      ctx.fillText(text.substr(0, Math.round((tmpAngle - startAngle) / (endAngle - startAngle) * text.length)), r, r + mH / 2 - fontSize / 2);
+      // ctx.fillText( Math.round((tmpAngle -  startAngle) / (endAngle - startAngle) * 100) + '%', r, r + fontSize / 2);
+      requestAnimationFrame(rander);
+    };
+    rander();
+
+    // rander2();
+  </script>
+
+</body>
+
+</html>
